@@ -4,13 +4,20 @@ import { Square } from './components/Square'
 import { WinnerModal } from './components/WinnerModal'
 import { TURNS, WINNER_LINES } from './constants'
 import { checkWinner, checkEndGame } from './logic/board'
+import { saveGame, delateGame } from './logic/saveGame'
 import './App.css'
 
 function App() {
   
-  const [board, setBoard ] = useState(Array(9).fill(null))
-
-  const [turn, setTurn] = useState(TURNS.X)
+  const [board, setBoard ] = useState(() => {
+    const localBoard = window.localStorage.getItem('board') 
+    return localBoard ? JSON.parse(localBoard) : Array(9).fill(null)
+  })
+    
+  const [turn, setTurn] = useState(() => {
+    const localTurn = window.localStorage.getItem('turn')
+    return localTurn ?? TURNS.X
+  })
 
   const [winner, setWinner] = useState(null)
 
@@ -21,6 +28,7 @@ function App() {
     setBoard(newBoard)
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
+    saveGame({ board: newBoard, turn: newTurn })
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
       confetti()
@@ -34,6 +42,7 @@ function App() {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
+    delateGame()
   }
 
   return (
