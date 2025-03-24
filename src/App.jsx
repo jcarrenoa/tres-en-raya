@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import confetti from 'canvas-confetti'
 import { Square } from './Square'
+import { WinnerModal } from './WinnerModal'
 import { TURNS, WINNER_LINES } from './constants'
 import { checkWinner, checkEndGame } from './logic/board'
 import './App.css'
@@ -54,6 +55,7 @@ function App() {
           })
         }
       </section>
+
       <section className="turn">
         <Square isSelect = {turn === TURNS.X}>
           {TURNS.X}
@@ -62,29 +64,9 @@ function App() {
           {TURNS.O}
         </Square>
       </section>
+      
       <section>
-        {
-          winner!==null && (
-            <section className='winner'>
-              <div className='text'>
-                <h2>
-                {
-                  winner !== false ? 'El ganador es' : 'Empate'
-                }
-                </h2>
-
-                <header className='win'>
-                    {winner && <Square> {winner} </Square>}
-                </header>
-
-                <footer>
-                  <button onClick={resetGame}>Empezar de nuevo</button>
-                </footer>
-              </div>
-
-            </section>
-          )
-        }
+        <winnerModal winner={winner} resetGame={resetGame} />
       </section>
     </main>
   )
