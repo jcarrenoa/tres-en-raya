@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import confetti from 'canvas-confetti'
-import { Square } from './Square'
-import { WinnerModal } from './WinnerModal'
+import { Square } from './components/Square'
+import { WinnerModal } from './components/WinnerModal'
 import { TURNS, WINNER_LINES } from './constants'
 import { checkWinner, checkEndGame } from './logic/board'
 import './App.css'
@@ -64,9 +64,9 @@ function App() {
           {TURNS.O}
         </Square>
       </section>
-      
+
       <section>
-        <winnerModal winner={winner} resetGame={resetGame} />
+        <WinnerModal winner={winner} resetGame={resetGame} />
       </section>
     </main>
   )
